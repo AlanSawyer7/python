@@ -17,20 +17,20 @@ bible_quotes = ["Psalm 23:4 - Even though I walk through the darkest valley, I w
 locations = { 
     "Hobbs Hamburgers": {
         "exits": {"north" : "the truck"},
-        "description": "A large roundish brick building with a huge, golden brown, plastic onion ring firmly attached to the top on a gray pole",
+        "description": "A large roundish brick building with a huge, golden brown, \nplastic onion ring firmly attached to the top on a gray pole",
         "npcs": coworkers
      },
 
     "the truck": { 
         "exits": { "south" : "Hobbs Hamburgers", "north" : "the highway" },
-        "description": "A large red and white box truck with the logo 'Hobbs Hamburgers' on the side. The o is a golden brown onion ring.",
+        "description": "A large red and white box truck with the logo 'Hobbs Hamburgers' on the side. \nThe o is a golden brown onion ring.",
         "npcs": traveling_party
      },
 
      "the highway": { 
         "exits": { "west" : "gas station" , "east" : "the forest", "north": "a busy stretch" },
         "description": "A busy highway with cars zooming by at high speeds.",
-        "npcs": enemies
+        "npcs": traveling_party + enemies
      },
 
      "gas station": { 
@@ -49,26 +49,142 @@ locations = {
      "a busy stretch": { 
         "exits": { "south" : "the highway", "north" : "a lonely stretch" },
         "description": "A particularly busy stretch of the highway with honking cars and trucks.",
-        "npcs": enemies
+        "npcs": traveling_party + enemies
      },
 
 # The party gets lost here
      "a lonely stretch": { 
         "exits": { "left" : "the forest" , "right": "a broken down shack" },
         "description": "A quiet, lonely stretch of the highway with little traffic.",
-        "npcs": friendlies
+        "npcs": traveling_party + friendlies
      },
 
 # The party gets even more lost here
     "the forest": {
         "exits": { "left" : "a murky pool", "right" : "a dirt path" },
         "description": "A dense forest with tall trees and thick underbrush. The sound of birds chirping fills the air.",
-        "npcs": ["a deer", "a squirrel", "a bird"] 
+        "npcs": traveling_party + ["a deer", "a squirrel", "a bird"] 
         },
 
-
+    "a broken down shack": {
+        "exits": { "left" : "a lonely stretch", "right": "an abandoned cabin" },
+        "description": "An old, broken down shack with peeling paint and a sagging roof.",
+        "npcs": traveling_party
+        },
+    "a murky pool": {
+        "exits": { "left" : "a sparkling stream", "right" : "the forest"},
+        "description": "A murky pool of water surrounded by tall grass and reeds.",
+        "npcs": traveling_party + ["a frog", "a fish"]
+        },
+    "a dirt path": {
+        "exits": { "left" : "the forest", "right": "a muddy stream" },
+        "description": "A narrow dirt path winding through the forest.",
+        "npcs": traveling_party + ["a rabbit", "a fox"]
+        },
+    "an abandoned cabin": {
+        "exits": { "left" : "a broken down shack", "right": "dark cave" },
+        "description": "An old, abandoned cabin with boarded up windows and a creaky door.",
+        "npcs": traveling_party + ["a raccoon", "an owl"]
+        },
+    "a sparkling stream": {
+        "exits": { "left" : "a tunnel", "right": "a murky pool" },
+        "description": "A clear, sparkling stream flowing through the forest.",
+        "npcs": traveling_party + ["a turtle", "a dragonfly"]
+        },
+    "a muddy stream": {
+        "exits": { "left" : "a dirt path", "right": "a waterfall" },
+        "description": "A muddy stream with brown, murky water.",
+        "npcs": traveling_party + ["a beaver", "a heron"]
+        },
+    "dark cave": {
+        "exits": { "left" : "an abandoned cabin", "right": "a hidden grotto" },
+        "description": "A dark, damp cave with stalactites hanging from the ceiling.",
+        "npcs": traveling_party + ["a bat", "a spider"]
+        },
+    "a tunnel": {
+        "exits": { "left" : "a mountain pass", "right": "a sparkling stream" },
+        "description": "A narrow tunnel carved through the rock.",
+        "npcs": traveling_party + ["a mole", "a salamander"]
+        },
+    "a waterfall": {
+        "exits": { "left" : "a muddy stream", "right": "a rainbow pool" },
+        "description": "A beautiful waterfall cascading down a rocky cliff.",
+        "npcs": traveling_party + ["a kingfisher", "a dragon"]
+        },
+    "a hidden grotto": {
+        "exits": { "left" : "dark cave", "right": "a secret meadow" },
+        "description": "A hidden grotto with sparkling crystals and a small pool of water.",
+        "npcs": traveling_party + ["a fairy", "a unicorn"]
+        },
+    "a mountain pass": {
+        "exits": { "left" : "a snowy peak", "right": "a tunnel" },
+        "description": "A narrow mountain pass with steep cliffs on either side.",
+        "npcs": traveling_party + ["a mountain goat", "an eagle"]
+        },
+    "a rainbow pool": {
+        "exits": { "left" : "a waterfall", "right": "a crystal cave" },
+        "description": "A pool of water that shimmers with all the colors of the rainbow.",
+        "npcs": traveling_party + ["a seal"] 
+        },
+    "a secret meadow": {
+        "exits": { "left" : "a hidden grotto", "right": "a flower field" },
+        "description": "A secret meadow filled with colorful wildflowers and tall grass.",
+        "npcs": traveling_party + ["a butterfly", "a grasshopper"]
+        },
+    "a snowy peak": {
+        "exits": { "left" : "a mountain pass", "right": "a cliff face"},
+        "description": "A snowy peak with a breathtaking view of the surrounding mountains.",
+        "npcs": traveling_party + ["a goat"]
+        },
+    "a crystal cave": {
+        "exits": { "left" : "a rainbow pool", "right": "a glittering chamber" },
+        "description": "A cave filled with glittering crystals that reflect the light.",
+        "npcs": traveling_party + ["a glowing book", "a shining scroll"]
+        },
+    "a flower field": {
+        "exits": { "left" : "a secret meadow", "right": "large building" },
+        "description": "A vast field filled with colorful flowers of all kinds.",
+        "npcs": traveling_party + ["a bee", "a ladybug"]
+        },
+    "a cliff face": {
+        "exits": { "left" : "a snowy peak"},
+        "description": "A steep cliff face with jagged rocks and a sheer drop to the valley below.",
+        "npcs": traveling_party + ["a hawk"]
+        },
+    "a glittering chamber": {
+        "exits": { "left" : "a crystal cave" },
+        "description": "A chamber filled with glittering treasures and precious gems.",
+        "npcs": traveling_party + ["a treasure chest", "a golden crown"]
+        },
+    "large building": {
+        "exits": { "left" : "a flower field" },
+        "description": "A large building with tall pillars and a grand entrance.",
+        "npcs": traveling_party + ["a guard", "a receptionist"]
+    },
 }
-	
+
+# print header and welcome message
+def print_header():
+    print(80*"=")
+    print(18*" " + "Welcome to the Fellowship of the Onion Ring!")
+    print(80*"=")
+    print("\n")
+
+def get_player_name() -> str:
+    name = input("What's your name? ")
+    return name if name != "" else "Dingus"
+    
+def print_location():
+    print(80*"-")
+    print(f"You are at {player_location}.")
+    print(locations[player_location]["description"])
+    print(5*"=")
+    if locations[player_location]["npcs"]:
+         print(f"(0 0) You see: {', '.join(locations[player_location]['npcs'])}")
+         print("  ^")
+         print(" \\-/\n")	
+    print("------> Exits: " + ", ".join(locations[player_location]["exits"].keys()))
+
 # display player inventory as a list
 def show_inventory():
     print(f"You have: {", ".join(player_inventory)}")
@@ -77,24 +193,22 @@ def main():
     global player_location
     global game_running 
 
-    #print header and welcome
-    print(44*"=")
-    print("Welcome to the Fellowship of the Onion Ring!")
-    print(44 *"=")
-    print("\n")
+    print_header()
 
     #ask for player name and start dialog
-    player_name = input("What's your name? ")
-    if player_name != "":
-        print(f"\n{player_name}! Are you daydreaming again? We have to get those onion rings, we're running low. Did you hear a word I said?\n") 
-    else:
-        player_name = "Dingus"
-        print(f"\nDingus! Are you daydreaming again? We have to get those onion rings, we're running low. Did you hear a word I said?\n")
+    player_name = get_player_name()
+
+
+    #initial dialog with boss
+    print("\\(0 0)/")
+    print("  .|.")
+    print("   O")
+    print("   -")
+    print(f"\n{player_name}! Are you daydreaming again? We have to get those onion rings, \nwe're running low. Did you hear a word I said?\n") 
     response = input("Possible responses are: (cry, no, yes) ")
-    print(100*"\n")
     
     if response == "cry":
-        print(f"You break down in tears. Your boss hands you a handkerchief to wipe your eyes, then yells at you 'Get out to the truck!'")
+        print(f"You break down in tears. Your boss hands you a handkerchief to wipe your eyes,\n then yells at you 'Get out to the truck!'")
         player_inventory.append("handkerchief")
     elif response == "no":
         print(f"Your boss rolls his eyes and yells 'Get out to the truck!'")
@@ -102,29 +216,41 @@ def main():
         print(f"Boss: Great! Now get to the truck")
     else:
         print(f"Your boss sighs. I'm too old for this.")
-    print(30*"*" + "\n")
+    print(80*"-")
 
-    # Game logic would go here
+    # Game logic loop
     while game_running:
-        print(f"You are at {player_location}.")
-        print(locations[player_location]["description"])
-        print(f"Exits: {", ".join(list(locations[player_location]['exits'].keys()))}")
-        print(f"You see: {", ".join(locations[player_location]['npcs'])}")
-        print("\n")
+        print_location()
 
-        command = input("What do you want to do? (move, talk, inventory, quit) ")
+        # Parse the player's input. The input can be 'move [direction]', 'talk [target]', 'inventory', or 'quit'.
+        # target is used to retain the case of the npc name when talking
+        # target is also used to store the direction for move command
+        user_input = input("What do you want to do? (move [direction], talk [target], inventory, quit) ")
+        command_list = user_input.split()
+
+        # Make the command lowercase for easier parsing
+        command = command_list[0].lower()
+
+        # set target for talk and move commands
+        target = command_list[1] if len(command_list) > 1 else ""
+        
+        #clear screen
         print(100*"\n")
 
         if command == "move":
-            direction = input("Where do you want to go? ")
-            if direction in locations[player_location]["exits"]:
+            direction = target
+            if direction == "":
+                direction = input("Where do you want to go? ")
+            elif direction in locations[player_location]["exits"]:
                 player_location = locations[player_location]["exits"][direction]
                 print(f"You move to {player_location}.\n")
             else:
                 print("You can't go that way.\n")
         elif command == "talk":
-            talk_to = ", ".join(locations[player_location]["npcs"])
-            npc = input("Who do you want to talk to? (" + talk_to + ") ")
+            npc = target  
+            if npc == "":   
+                talk_to = ", ".join(locations[player_location]["npcs"])
+                npc = input("Who do you want to talk to? (" + talk_to + ") ")
             if npc in locations[player_location]["npcs"]:
                 print(f"You talk to {npc}. They greet you warmly.\n")
             else:
