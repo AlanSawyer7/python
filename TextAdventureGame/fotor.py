@@ -176,16 +176,15 @@ def get_player_name() -> str:
 
 def initial_dialog(player_name: str):
     #initial dialog with boss
-    print("\\(0 0)/")
-    print("  .|.")
-    print("   O")
-    print("   -")
+    print(33*" " + "\\(0 0)/")
+    print(33*" " + "  .|.")
+    print(33*" " + "   O")
+    print(33*" " + "   -")
     print(f"\n{player_name}! Are you daydreaming again? We have to get those onion rings, \nwe're running low. Did you hear a word I said?\n") 
     response = input("Possible responses are: (cry, no, yes) ")
     
-    print("-----")
     if response == "cry":
-        print(f"You break down in tears. Your boss hands you a handkerchief to wipe your eyes,\n then yells at you 'Get out to the truck!'")
+        print(f"You break down in tears. Your boss hands you a handkerchief to wipe your eyes, \nthen yells at you 'Get out to the truck!'")
         player_inventory.append("handkerchief")
     elif response == "no":
         print(f"Your boss rolls his eyes and yells 'Get out to the truck!'")
@@ -194,6 +193,8 @@ def initial_dialog(player_name: str):
     else:
         print(f"Your boss sighs. I'm too old for this.")
     print(80*"-")
+    input("Press Enter to continue...")
+    clear_screen()
     
 def print_location():
     print(80*"-")
@@ -205,11 +206,17 @@ def print_location():
          print("  ^")
          print(" \\-/\n")	
     print("------> Exits: " + ", ".join(locations[player_location]["exits"].keys()))
+    print(5*"\n")
 
 # display player inventory as a list
 def show_inventory():
     print(f"You have: {", ".join(player_inventory)}")
 
+# clear screen
+def clear_screen():
+    print(25*"\n")
+
+# main game loop
 def main(): 
     global player_location
     global game_running 
@@ -237,9 +244,8 @@ def main():
         # set target for talk and move commands
         target = command_list[1] if len(command_list) > 1 else ""
         
-        #clear screen
-        print(100*"\n")
-
+        clear_screen()
+        
         if command == "move":
             direction = target
             if direction == "":
