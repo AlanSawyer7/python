@@ -6,9 +6,9 @@ player_location = "Hobbs Hamburgers"
 game_running = True
 coworkers = ["your boss", "Timmy", "Sam", "Fred"]
 traveling_party = coworkers[1:4]
-enemies = ["road rage driver", "angry pedestrian", "lost hiker"]    
-friendlies = ["helpful motorist", "kind stranger", "friendly dog"]
-loot = ["onion rings", "fries", "soda", "ketchup packets", "crumpled bill", "coins"] 
+enemies = ["road_rage_driver", "angry_pedestrian", "lost_hiker"]    
+friendlies = ["helpful_motorist", "kind_stranger", "friendly_dog"]
+loot = ["onion_rings", "fries", "soda", "ketchup_packets", "crumpled_bill", "coins"] 
 bible_quotes = ["Psalm 23:4 - Even though I walk through the darkest valley, I will fear no evil, for you are with me; your rod and your staff, they comfort me.",
                 "Proverbs 3:5 - Trust in the Lord with all your heart and lean not on your own understanding;",
                 "Isaiah 41:10 - So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand."] 
@@ -35,13 +35,13 @@ locations = {
 
      "gas station": { 
         "exits": { "east" : "the highway" , "west" : "the diner" },
-        "description": "A small gas station with a convenience store. The smell of gasoline fills the air.",
+        "description": "A small gas station with a convenience store. The smell of gasoline fills \nthe air.",
         "npcs": friendlies + traveling_party
      },
     
     "the diner": { 
         "exits": { "east" : "gas station" },
-        "description": "A classic American diner with a red and white checkered floor and a long counter with stools.",
+        "description": "A classic American diner with a red and white checkered floor and a \nlong counter with stools.",
         "npcs": friendlies + traveling_party
      },
 
@@ -132,7 +132,7 @@ locations = {
         "npcs": traveling_party + ["a butterfly", "a grasshopper"]
         },
     "a snowy peak": {
-        "exits": { "left" : "a mountain pass", "right": "a cliff face"},
+        "exits": { "left" : "a cliff face", "right": "a mountain pass"},
         "description": "A snowy peak with a breathtaking view of the surrounding mountains.",
         "npcs": traveling_party + ["a goat"]
         },
@@ -147,7 +147,7 @@ locations = {
         "npcs": traveling_party + ["a bee", "a ladybug"]
         },
     "a cliff face": {
-        "exits": { "left" : "a snowy peak"},
+        "exits": { "right" : "a snowy peak"},
         "description": "A steep cliff face with jagged rocks and a sheer drop to the valley below.",
         "npcs": traveling_party + ["a hawk"]
         },
@@ -173,6 +173,27 @@ def print_header():
 def get_player_name() -> str:
     name = input("What's your name? ")
     return name if name != "" else "Dingus"
+
+def initial_dialog(player_name: str):
+    #initial dialog with boss
+    print("\\(0 0)/")
+    print("  .|.")
+    print("   O")
+    print("   -")
+    print(f"\n{player_name}! Are you daydreaming again? We have to get those onion rings, \nwe're running low. Did you hear a word I said?\n") 
+    response = input("Possible responses are: (cry, no, yes) ")
+    
+    print("-----")
+    if response == "cry":
+        print(f"You break down in tears. Your boss hands you a handkerchief to wipe your eyes,\n then yells at you 'Get out to the truck!'")
+        player_inventory.append("handkerchief")
+    elif response == "no":
+        print(f"Your boss rolls his eyes and yells 'Get out to the truck!'")
+    elif response == "yes":
+        print(f"Boss: Great! Now get to the truck")
+    else:
+        print(f"Your boss sighs. I'm too old for this.")
+    print(80*"-")
     
 def print_location():
     print(80*"-")
@@ -198,25 +219,7 @@ def main():
     #ask for player name and start dialog
     player_name = get_player_name()
 
-
-    #initial dialog with boss
-    print("\\(0 0)/")
-    print("  .|.")
-    print("   O")
-    print("   -")
-    print(f"\n{player_name}! Are you daydreaming again? We have to get those onion rings, \nwe're running low. Did you hear a word I said?\n") 
-    response = input("Possible responses are: (cry, no, yes) ")
-    
-    if response == "cry":
-        print(f"You break down in tears. Your boss hands you a handkerchief to wipe your eyes,\n then yells at you 'Get out to the truck!'")
-        player_inventory.append("handkerchief")
-    elif response == "no":
-        print(f"Your boss rolls his eyes and yells 'Get out to the truck!'")
-    elif response == "yes":
-        print(f"Boss: Great! Now get to the truck")
-    else:
-        print(f"Your boss sighs. I'm too old for this.")
-    print(80*"-")
+    initial_dialog(player_name)
 
     # Game logic loop
     while game_running:
