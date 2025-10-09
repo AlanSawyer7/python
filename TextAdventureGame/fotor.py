@@ -269,7 +269,7 @@ def main():
             print("\n")
         elif command == "quit":
             print("Exiting the game...\n")
-            break
+            game_running = False
         else:
             print("Invalid command. Please try again.\n")
 
