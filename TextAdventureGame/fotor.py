@@ -17,18 +17,32 @@ vehicles = {
     "truck": {
         "started": False,
         "fuel": 100,
+        "rate": 10, #fuel consumption rate
         "capacity": 50, #bags of onion rings
+        "uses": "drive",
     },
     "car": {
         "started": False,
         "fuel": 50,
+        "rate": 7, #fuel consumption rate
         "capacity": 5, #bags of onion rings
+        "uses": "drive",
+    },
+    "motorbike": {
+        "started": False,
+        "fuel": 25,
+        "rate": 2, #fuel consumption rate
+        "capacity":2, #bags of onion rings
+        "uses": "ride",
     },
     "bike": {
-        "started": False,
+        "started": True,
         "fuel": 0,
-        "capacity":2, #bags of onion rings
+        "rate": 0, #fuel consumption rate
+        "capacity":1, #bags of onion rings
+        "uses": "ride",
     }
+
 }
 # currently used vehicle, movement decreases fuel amount increases capacity
 current_vehicle = None
@@ -60,7 +74,7 @@ locations = {
         "exits": { "east" : "the highway" , "west" : "the diner" },
         "description": "A small gas station with a convenience store. The smell of gasoline fills \nthe air.",
         "npcs": friendlies + traveling_party,
-        "items": ["bible", "map" ],
+        "items": ["bible", "map", "car_keys" ],
         "vehicles": ["car"]
      },
     "the diner": { 
@@ -271,6 +285,8 @@ def print_location():
          print(f"(0 0) You see: {', '.join(locations[player_location]['npcs'])}")
          print("  ^")
          print(" \\-/\n")	
+    if locations[player_location]["vehicles"]:
+         print(f"You notice the following vehicles: {', '.join(locations[player_location]['vehicles'])}\n")
     if locations[player_location]["items"]:
          print(f"You notice the following items: {', '.join(locations[player_location]['items'])}\n")
     print("------> Exits: " + ", ".join(locations[player_location]["exits"].keys()))
@@ -334,44 +350,60 @@ def drive(player_location: str, vehicle: str):
     global current_vehicle
     if vehicle == "":
         vehicle = input("What vehicle do you want to drive? ")
+    if vehicles[vehicle]["uses"] != "drive":
+        print(f"You must drive this vehicle.\n")
+        return
     if vehicle in locations[player_location]["vehicles"]:
         current_vehicle = vehicle
+        locations[player_location]["vehicles"].remove(vehicle)
         print(f"You get into the {vehicle}.\n")
     else:
         print(f"There is no {vehicle} here to drive.\n")
-
-def start_vehicle(player_location: str, vehicle: str):
-    global current_vehicle
-    if vehicle == "":
-        vehicle = input("What vehicle do you want to start? ")
-    if vehicle == current_vehicle:
-        if not vehicles[vehicle]["started"]:
-            vehicles[vehicle]["started"] = True
-            print(f"You start the {vehicle}.\n")
-        else:
-            print(f"The {vehicle} is already started.\n")
-    else:
-        print(f"You are not in the {vehicle}.\n")
-
-def exit_vehicle(player_location: str, vehicle: str):   
-    global current_vehicle
-    if vehicle == "":
-        vehicle = input("What vehicle do you want to exit? ")
-    if vehicle == current_vehicle:
-        current_vehicle = None
-        print(f"You exit the {vehicle}.\n")
-    else:
-        print(f"You are not in the {vehicle}.\n")
 
 def ride_vehicle(player_location: str, vehicle: str):
     global current_vehicle
     if vehicle == "":
         vehicle = input("What vehicle do you want to ride? ")
     current_vehicle = vehicle
-    if current_vehicle == "bike":
-        print(f"You ride the {current_vehicle}.")
+    if vehicles[vehicle]["uses"] != "ride":
+        print(f"You must ride the .\n")
+        return
+    if vehicle in locations[player_location]["vehicles"]:
+        current_vehicle = vehicle
+        locations[player_location]["vehicles"].remove(vehicle)
+        print(f"You get on the {vehicle}.\n")
     else:
-        print("You can't ride that vehicle.\n")
+        print(f"There is no {vehicle} here to drive.\n")
+
+def start_vehicle(player_inventory: list, vehicle: str):
+    global current_vehicle
+
+    if vehicle == "":
+        vehicle = input("What vehicle do you want to start? ")
+
+    keys = vehicle + "_keys"
+    if keys not in player_inventory:
+        print(f"You don't have the keys to start the {vehicle}.\n")
+        return
+    if vehicle == current_vehicle:
+        if not vehicles[vehicle]["started"]:
+            vehicles[vehicle]["started"] = True
+            print(f"You use the {vehicle} keys to start the {vehicle}.\n")
+        else:
+            print(f"The {vehicle} is already started.\n")
+    else:
+        print(f"You must {vehicles[vehicle]['uses']} the {vehicle} before starting it.\n")
+
+def exit_vehicle(player_location: str, vehicle: str):   
+    global current_vehicle
+    if vehicle == "":
+        vehicle = input("What vehicle do you want to exit? ")
+    if vehicle == current_vehicle:
+        locations[player_location]["vehicles"].append(vehicle)
+        current_vehicle = None
+        print(f"You exit the {vehicle}.\n")
+    else:
+        print(f"You are not in the {vehicle}.\n")
 
 def handle_vehicle_movement(current_location: str, direction: str):
     global player_location
@@ -382,8 +414,11 @@ def handle_vehicle_movement(current_location: str, direction: str):
         if vehicles[current_vehicle]["fuel"] > 0:
             new_location = locations[current_location]["exits"][direction]
             player_location = new_location
-            vehicles[current_vehicle]["fuel"] -= 5  # Decrease fuel by 5 units per move
-            print(f"You drive the {current_vehicle} {direction} to {new_location}. Fuel left: {vehicles[current_vehicle]['fuel']}.\n")
+            vehicles[current_vehicle]["fuel"] -= vehicles[current_vehicle]["rate"]  # Decrease fuel by rate units per move
+            if vehicles[current_vehicle]["rate"] == 0:
+                print(f"You {vehicles[current_vehicle]['uses']} the {current_vehicle} {direction} to {new_location}.")
+            else:
+                print(f"You {vehicles[current_vehicle]['uses']} the {current_vehicle} {direction} to {new_location}. Fuel left: {vehicles[current_vehicle]['fuel']}.\n")
         else:
             print(f"The {current_vehicle} is out of fuel! You need to refuel before moving.\n")
     else:
@@ -443,7 +478,7 @@ def handle_input():
     elif command == "ride":
         ride_vehicle(player_location, target)
     elif command == "start":
-        start_vehicle(player_location, target)
+        start_vehicle(player_inventory, target)
     elif command == "exit":
         exit_vehicle(player_location, target)
     elif command == "inventory":
